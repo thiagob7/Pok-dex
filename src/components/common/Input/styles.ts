@@ -39,4 +39,10 @@ export const Container = styled.section`
     padding-top: 0.35rem;
     font-size: 17px;
   }
+
+  @media screen and (max-width: 768px) {
+    div {
+      display: none;
+    }
+  }
 `;

@@ -7,10 +7,20 @@ import { Input } from "~/components/common/Input";
 import axios from "axios";
 import { Card, CardProps } from "~/components/common/Card";
 import { FaSearch } from "react-icons/fa";
+import { ModalPokemon } from "../Modal";
 
 export const Banner: React.FC = () => {
   const [pokemons, setPokemons] = useState<CardProps[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedPokemon, setSelectedPokemon] = useState<CardProps | null>();
+
+  const handleCardClick = (pokemon: CardProps) => {
+    setSelectedPokemon(pokemon);
+  };
+
+  const openModal = () => setSelectedPokemon(selectedPokemon);
+
+  const closeModal = () => setSelectedPokemon(null);
 
   useEffect(() => {
     getPokemons();
@@ -46,7 +56,7 @@ export const Banner: React.FC = () => {
         <div className="cards">
           {filteredPokemons.length > 0 ? (
             filteredPokemons.map((pokemon, key) => (
-              <div key={key}>
+              <div key={key} onClick={() => handleCardClick(pokemon)}>
                 <Card
                   name={pokemon.data.name}
                   type={pokemon.data.types}
@@ -59,6 +69,15 @@ export const Banner: React.FC = () => {
             <img className="img-off" src="/assets/off.svg" alt="" />
           )}
         </div>
+
+        {selectedPokemon && (
+          <ModalPokemon
+            image={selectedPokemon.data.sprites.front_default}
+            isOpen={!!openModal}
+            onClose={closeModal}
+            stats={selectedPokemon.data.stats}
+          />
+        )}
       </Content>
     </Container>
   );

@@ -14,10 +14,9 @@ export const Container = styled.section`
   justify-content: space-between;
 
   img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30%;
+    display: block;
+    overflow: hidden;
+    object-fit: contain;
   }
 
   .coll-left {
@@ -51,5 +50,9 @@ export const Container = styled.section`
 
       background: ${({ theme }) => theme.colors["gray-100"]};
     }
+  }
+
+  .modal {
+    display: flex;
   }
 `;
